@@ -16,12 +16,12 @@ Build a global hub where AI Agentic Engineers showcase, contribute, and commerci
 
 ### Phase 1: Foundation & Setup
 - [x] Clone/setup `hydrogen-skeleton-shadcn` or init Hydrogen with shadcn manually
-- [ ] Connect Hydrogen app to Shopify store (see `docs/SHOPIFY_SETUP.md`)
+- [x] Connect Hydrogen app to Shopify store (see `docs/SHOPIFY_SETUP.md`)
 - [x] Configure Tailwind CSS + shadcn/ui components (pre-configured in starter)
 - [x] Setup project structure (routes, components, services)
 - [x] Setup Git repository with conventional commits
-- [ ] Create base layout with dark, dev-centric aesthetic
-- [ ] Implement basic navigation (Header, Footer, Sidebar)
+- [x] Create base layout with dark, dev-centric aesthetic
+- [x] Implement basic navigation (Header, Footer)
 
 ### Phase 2: Shopify Data Modeling
 - [ ] Create product type `AI Agent` in Shopify
@@ -40,7 +40,7 @@ Build a global hub where AI Agentic Engineers showcase, contribute, and commerci
 - [ ] Setup customer tags/metafields for `ENGINEER` vs `ENTERPRISE` roles
 
 ### Phase 3: Public Marketplace UI
-- [ ] `/` - Landing page (hero, featured agents, value proposition)
+- [x] `/` - Landing page (hero, featured agents, value proposition)
 - [ ] `/agents` - Agent index/grid (filterable, searchable)
 - [ ] `/agents/:handle` - Agent detail page with tabs:
   - Overview
@@ -104,7 +104,7 @@ Build a global hub where AI Agentic Engineers showcase, contribute, and commerci
 ---
 
 ## 🎯 Current Focus
-**Phase 1: Foundation & Setup** - Getting the Hydrogen + shadcn stack running and connected to Shopify.
+**Phase 2: Shopify Data Modeling** - Define metafields for agents and create collections.
 
 ---
 
@@ -112,6 +112,7 @@ Build a global hub where AI Agentic Engineers showcase, contribute, and commerci
 | Session | Date       | Focus                          | Status      |
 |---------|------------|--------------------------------|-------------|
 | 001     | 2024-12-23 | Project initialization, GRANDPLAN created, hydrogen-skeleton-shadcn cloned, Git configured | Done |
+| 002     | 2024-12-25 | Dark dev-centric UI, Header/Footer redesign, Landing page with hero | Done |
 
 ---
 
