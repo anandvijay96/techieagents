@@ -1,95 +1,151 @@
-import {useMatches, NavLink} from '@remix-run/react';
+import {NavLink} from '@remix-run/react';
 import type {FooterQuery} from 'storefrontapi.generated';
-import { buttonVariants } from './ui/button';
+import {Icon} from '@iconify/react';
 import ThemeToggle from './ThemeToggle';
+
+const FOOTER_LINKS = {
+  product: [
+    {title: 'Agents', url: '/agents'},
+    {title: 'Engineers', url: '/engineers'},
+    {title: 'Enterprise', url: '/enterprise'},
+    {title: 'Pricing', url: '/pricing'},
+  ],
+  resources: [
+    {title: 'Documentation', url: '/docs'},
+    {title: 'API Reference', url: '/docs/api'},
+    {title: 'Changelog', url: '/changelog'},
+    {title: 'Status', url: '/status'},
+  ],
+  company: [
+    {title: 'About', url: '/about'},
+    {title: 'Blog', url: '/blog'},
+    {title: 'Careers', url: '/careers'},
+    {title: 'Contact', url: '/contact'},
+  ],
+  legal: [
+    {title: 'Privacy', url: '/policies/privacy-policy'},
+    {title: 'Terms', url: '/policies/terms-of-service'},
+  ],
+};
+
+const SOCIAL_LINKS = [
+  {icon: 'lucide:github', url: 'https://github.com/techieagents', label: 'GitHub'},
+  {icon: 'lucide:twitter', url: 'https://twitter.com/techieagents', label: 'Twitter'},
+  {icon: 'lucide:linkedin', url: 'https://linkedin.com/company/techieagents', label: 'LinkedIn'},
+  {icon: 'lucide:message-circle', url: 'https://discord.gg/techieagents', label: 'Discord'},
+];
 
 export function Footer({menu}: FooterQuery) {
   return (
-    <footer className="mt-4 border-t">
-      <div className="container flex justify-between p-4 mx-auto">
-        <FooterMenu menu={menu} />
-        <ThemeToggle />
+    <footer className="border-t border-border/40 bg-background">
+      <div className="container px-4 py-12 mx-auto max-w-7xl">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
+          {/* Brand Column */}
+          <div className="col-span-2 md:col-span-1">
+            <NavLink to="/" className="flex items-center gap-2 mb-4">
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary">
+                <Icon icon="lucide:bot" className="w-5 h-5 text-primary-foreground" />
+              </div>
+              <span className="font-semibold">TechieAgents</span>
+            </NavLink>
+            <p className="mb-4 text-sm text-muted-foreground">
+              The marketplace for AI agents. Built by developers, for developers.
+            </p>
+            <div className="flex items-center gap-2">
+              {SOCIAL_LINKS.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 transition-colors rounded-md text-muted-foreground hover:text-foreground hover:bg-accent"
+                  aria-label={link.label}
+                >
+                  <Icon icon={link.icon} className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Product Links */}
+          <div>
+            <h4 className="mb-3 text-sm font-semibold">Product</h4>
+            <ul className="space-y-2">
+              {FOOTER_LINKS.product.map((link) => (
+                <li key={link.url}>
+                  <NavLink
+                    to={link.url}
+                    className="text-sm transition-colors text-muted-foreground hover:text-foreground"
+                  >
+                    {link.title}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Resources Links */}
+          <div>
+            <h4 className="mb-3 text-sm font-semibold">Resources</h4>
+            <ul className="space-y-2">
+              {FOOTER_LINKS.resources.map((link) => (
+                <li key={link.url}>
+                  <NavLink
+                    to={link.url}
+                    className="text-sm transition-colors text-muted-foreground hover:text-foreground"
+                  >
+                    {link.title}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company Links */}
+          <div>
+            <h4 className="mb-3 text-sm font-semibold">Company</h4>
+            <ul className="space-y-2">
+              {FOOTER_LINKS.company.map((link) => (
+                <li key={link.url}>
+                  <NavLink
+                    to={link.url}
+                    className="text-sm transition-colors text-muted-foreground hover:text-foreground"
+                  >
+                    {link.title}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Legal Links */}
+          <div>
+            <h4 className="mb-3 text-sm font-semibold">Legal</h4>
+            <ul className="space-y-2">
+              {FOOTER_LINKS.legal.map((link) => (
+                <li key={link.url}>
+                  <NavLink
+                    to={link.url}
+                    className="text-sm transition-colors text-muted-foreground hover:text-foreground"
+                  >
+                    {link.title}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="flex flex-col items-center justify-between gap-4 pt-8 mt-8 border-t border-border/40 md:flex-row">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} TechieAgents. All rights reserved.
+          </p>
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+          </div>
+        </div>
       </div>
     </footer>
   );
 }
-
-function FooterMenu({menu}: Pick<FooterQuery, 'menu'>) {
-  const [root] = useMatches();
-  const publicStoreDomain = root?.data?.publicStoreDomain;
-  return (
-    <nav role="navigation">
-      {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
-        if (!item.url) return null;
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain)
-            ? new URL(item.url).pathname
-            : item.url;
-        const isExternal = !url.startsWith('/');
-        return isExternal ? (
-          <a href={url} key={item.id} rel="noopener noreferrer" target="_blank">
-            {item.title}
-          </a>
-        ) : (
-          <NavLink
-            end
-            className={({ isActive, isPending }) => `
-              ${buttonVariants({ variant: 'link' })}
-              ${isActive ? 'text-primary' : '!text-muted-foreground'}
-              ${isPending ? 'animate-pulse' : ''}
-            `}
-            key={item.id}
-            prefetch="intent"
-            to={url}
-          >
-            {item.title}
-          </NavLink>
-        );
-      })}
-    </nav>
-  );
-}
-
-const FALLBACK_FOOTER_MENU = {
-  id: 'gid://shopify/Menu/199655620664',
-  items: [
-    {
-      id: 'gid://shopify/MenuItem/461633060920',
-      resourceId: 'gid://shopify/ShopPolicy/23358046264',
-      tags: [],
-      title: 'Privacy Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/privacy-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633093688',
-      resourceId: 'gid://shopify/ShopPolicy/23358013496',
-      tags: [],
-      title: 'Refund Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/refund-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633126456',
-      resourceId: 'gid://shopify/ShopPolicy/23358111800',
-      tags: [],
-      title: 'Shipping Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/shipping-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633159224',
-      resourceId: 'gid://shopify/ShopPolicy/23358079032',
-      tags: [],
-      title: 'Terms of Service',
-      type: 'SHOP_POLICY',
-      url: '/policies/terms-of-service',
-      items: [],
-    },
-  ],
-};
